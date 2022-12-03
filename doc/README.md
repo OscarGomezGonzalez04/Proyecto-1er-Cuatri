@@ -51,6 +51,15 @@ He creado una namedtuple asociada a cada país , de manera que resulta más senc
 * **<min_pais_por_edad_media>**:Función que incopora la función anterior(filtra_paises_por_media_edad) para calcular sobre el resultado de esta el país con menor tasa de edad media
 * **<ordenar_paises_por_edad_media>**:Función que incopora la función anterior(filtra_paises_por_media_edad) para ordenar de mayor a menor los datos obtenidos de esta en función de la edad media
 * **<agrupar_paises_por_ranking>**:Función que devuelve un diccionario cuyas claves son los países y los valores son los rankings que estos ocupan respecto al resto de países
+* **<contar_poblacion_por_pais>**:Función que devuelve un diccionario que hace corresponder a cada clave(país) la 
+suma de sus poblaciones a lo largo de los distintos años incluidos en el csv
+* **<min_año_mencionado>**:Función que devuelve el mínimo de un diccionario
+que hace corresponder a cada clave(país) el número de tuplas que contienen dicha clave
+* **<poblacion_global_por_anyo>**:Función auxiliar que nos devuelva una lista de tuplas(año, pob global) segun qué 
+país le indiquemos   
+* **<dicc_porcentaje_poblacion_por_anyo>**:Función que devuelve un diccionario que hace corresponder a cada clave(año) el porcentaje de población del país indicado respecto a la población global 
+* **<incremento_poblacion>**:Función que devuelve una lista compuesta por tuplas(año actual, porcejntaje del
+incremento de la población de un año para otro)
 
 ### \<countries_population_test.py\>
 
@@ -61,9 +70,13 @@ He creado una namedtuple asociada a cada país , de manera que resulta más senc
 * **<test_min_pais_por_edad_media>**: Se encarga de filtrar el país con menor edad media, aprovechando los datos otorgados por la función anterior , en forma de tupla(País, edad media)
 * **<test_ordenar_paises_por_edad_media>**:Se encarga de ordenar los países de mayor a menor , según su edad media, aprovechando los datos otorgados por la función anterior , en forma de un conjunto compuesto por tuplas(País, edad media)
 * **<test_agrupar_paises_por_ranking>**:Recibe como parámetros de entrada los datos del fichero dado, con los cuales crea un diccionario en el cual las claves son los paises de dicho fichero y los valores , sus correspondientes rankings.
+* **<test_contar_poblacion_por_pais>**:
+* **<lee_min_año_mencionado>**:
+* **<test_poblacion_global_por_anyo>**:
+* **<test_icc_porcentaje_poblacion_por_anyo>**:
+* **<test_incremento_poblacion>**:
+* **<test_graf_incremento_poblacion>**:
 
-### \<modulo 2\>
+### \<countries_population2.py\>
 
-* **<funcion 1>**: 
-* **<funcion 2>**: 
-* ...
+* **<graf_incremento_poblacion>**:Nos muestra la gráfica del flujo del porcentaje del incremento de población a lo largo de los años  

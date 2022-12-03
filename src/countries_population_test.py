@@ -1,4 +1,5 @@
 from countries_population1 import *
+from countries_population2 import *
 
 
 #----Test de funciones----#
@@ -36,6 +37,27 @@ def test_agrupar_paises_por_ranking(registros):
     print("\n----Test de la función: agrupar_paises_por_ranking----")
     print("Estos son todos los países con sus respectivos puestos en el ranking mundial:", agrupar_paises_por_ranking(registros))
 
+#-------BLOQUE 3-------
+def test_contar_poblacion_por_pais(registros):
+    print("\n----Test de la función: contar_poblacion_por_pais----")
+    print(contar_poblacion_por_pais(registros))
+def test_min_año_mencionado(registros):
+    print("\n----Test de la función: min_año_mencionado----")
+    print(min_año_mencionado(registros))
+def test_dicc_porcentaje_poblacion_por_anyo(registros, pais):
+    print("\n----Test de la función: dicc_porcentaje_poblacion_por_anyo----")
+    print(dicc_porcentaje_poblacion_por_anyo(registros, pais))
+def test_incremento_poblacion(registros, pais):
+    print("\n----Test de la función: incremento_poblacion----")
+    lista = incremento_poblacion(registros, pais)
+    for e, s in lista:
+        print("{:3d} -> {:6.3f}".format(e, s), end='')
+    
+#-------BLOQUE 4-------
+def test_graf_incremento_poblacion(registros, pais):
+    print("\n----Test de la función: graf_incremento_poblacion----")
+    print(graf_incremento_poblacion(registros, pais))
+
 #----Bloque principal----#
 if __name__ == "__main__":
     DATOS = lee_fichero('./data/countries_population.csv')
@@ -46,6 +68,10 @@ if __name__ == "__main__":
     test_min_pais_por_edad_media(DATOS, 15)
     test_ordenar_paises_por_edad_media(DATOS, 15)
     test_agrupar_paises_por_ranking(DATOS)
-    
+    test_contar_poblacion_por_pais(DATOS)
+    test_min_año_mencionado(DATOS)
+    test_dicc_porcentaje_poblacion_por_anyo(DATOS, 'Seychelles')
+    test_incremento_poblacion(DATOS, 'China')
+    test_graf_incremento_poblacion(DATOS, 'China')
    
     

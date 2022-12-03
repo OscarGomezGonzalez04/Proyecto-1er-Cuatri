@@ -1,5 +1,5 @@
 import csv
-from collections import namedtuple, defaultdict
+from collections import namedtuple, defaultdict, Counter
 from datetime import datetime
 
 
@@ -16,6 +16,8 @@ def lee_fichero(fichero):
         next(lector)
         #Al tratarse de un archivo csv, es recomendable saltar la cabecera que este tipo de archivos suelen presentar
         registros=[]
+
+    
         for listado in lector:
             Month=int(listado[0])
             Year=int(listado[1])
@@ -48,7 +50,7 @@ def lee_fichero(fichero):
             Countrys_Share_of_World_Pop=listado[13]
             Countrys_Share_of_World_Pop=Countrys_Share_of_World_Pop.replace(",", ".")
             Countrys_Share_of_World_Pop=float(Countrys_Share_of_World_Pop)
-            Global_community=listado[14]
+            Global_community= int(listado[14])
             Rank=listado[15]
             War=bool(listado[16])
             Partner=listado[17]
@@ -102,25 +104,79 @@ def ordenar_paises_por_edad_media(registros, filtro):
 
 #Función que devuelve un diccionario cuyas claves son los países y los valores son los rankings que estos ocupan
 # respecto al resto de países.
-def agrupar_paises_por_ranking(registros):
+def agrupar_paises_por_ranking(registros, n):
     res = dict()
     for r in registros:
       clave = r.Country
-      if clave in res:
-         res[clave].add(r.Rank) 
+      if clave in res and len(res) < n:
+         res[clave].add(r.Rank)
       else:
-         res[clave] = set(r.Rank)
+         res[clave] = set(r)
      
     return res
 
 
+#-------BLOQUE 3-------
 
+#Función que devuelve un diccionario que hace corresponder a cada clave(país) la 
+# suma de sus poblaciones a lo largo de los distintos años incluidos en el csv
+def contar_poblacion_por_pais(registros):
+    res = dict()
+    for r in registros:
+        clave = r.Country
+        if clave in res:
+            res[clave]+=r.Population
+        else:
+            res[clave] = r.Population
+    return res
+#Función que devuelve el mínimo de un diccionario
+#  que hace corresponder a cada clave(país) el número de tuplas que contienen dicha clave
+def min_año_mencionado(registros):
+    res = dict()
+    for r in registros:
+        clave = r.Year
+        if clave in res:
+            res[clave]+= 1
+        else:
+            res[clave] = 1
+    return min(res.items(), key=lambda x:x[1])
 
+#Función que devuelve un diccionario que hace corresponder a cada clave(año) el porcentaje 
+# de población del país indicado respecto a la población global 
 
- 
+#Para ello, antes creamos una funcion auxiliar que nos devuelva una lista de tuplas(año, pob global) segun qué 
+# país le indiquemos   
 
+def poblacion_global_por_anyo(registros, pais):
+    result = defaultdict(float)
+    for r in registros:
+        if pais == r.Country:
 
+            result[r.Year] += r.Global_community
+    return sorted(result.items(), reverse=True, key = lambda r:r[1])
 
+def dicc_porcentaje_poblacion_por_anyo(registros, pais):
+    result = defaultdict(float)
+    anyos_poblaciones_glob={Year:glob for Year, glob in poblacion_global_por_anyo(registros, pais)}
+
+    for r in registros:
+        if pais == r.Country:
+
+            result[r.Year] = 100 * r.Population/anyos_poblaciones_glob[r.Year]
+
+    return result
+
+#Función que devuelve una lista compuesta por tuplas(año actual, porcejntaje del
+#  incremento de la población de un año para otro)
+
+def incremento_poblacion(registros, pais):
+    poblacion_global_por_anyo_ordenada = sorted(poblacion_global_por_anyo(registros, pais))
+    var_auxiliar = list(zip(poblacion_global_por_anyo_ordenada[:-1], poblacion_global_por_anyo_ordenada[1:]))
+    result = []
+    for pob_anterior, pob_actual in var_auxiliar:
+        result.append((pob_actual[0], 100.0*(pob_actual[1]-pob_anterior[1])/pob_anterior[1]))
+    return result
         
+    
 
-
+    
