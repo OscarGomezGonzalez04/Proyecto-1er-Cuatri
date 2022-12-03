@@ -104,11 +104,11 @@ def ordenar_paises_por_edad_media(registros, filtro):
 
 #Función que devuelve un diccionario cuyas claves son los países y los valores son los rankings que estos ocupan
 # respecto al resto de países.
-def agrupar_paises_por_ranking(registros, n):
+def agrupar_paises_por_ranking(registros):
     res = dict()
     for r in registros:
       clave = r.Country
-      if clave in res and len(res) < n:
+      if clave in res:
          res[clave].add(r.Rank)
       else:
          res[clave] = set(r)
