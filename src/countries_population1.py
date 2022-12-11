@@ -1,12 +1,21 @@
 import csv
 from collections import namedtuple, defaultdict, Counter
 from datetime import datetime
-
-
+from parsers import *
 
 Pais = namedtuple("Pais", "Month, Year, Date, Country, Population, Yearly_Change, Anual_changes, Migrants, Median_Age, Fertility_Rate, Density, city_Popu, Urban_Populations , Countrys_Share_of_World_Pop , Global_community, Rank, War, Partner")
 
 def lee_fichero(fichero):
+    result = []
+    with open(fichero) as f:
+        lector = csv.reader(f)
+        next(lector)
+        next(lector)
+        for Month, Year, Date, Country, Population, Yearly_Change, Anual_changes, Migrants, Median_Age, Fertility_Rate, Density, city_Popu, Urban_Populations , Countrys_Share_of_World_Pop , Global_community, Rank, War, Partner in lector:
+            result.append(Pais(int(Month.strip()), int(Year.strip()), parsea_fecha(Date.strip()), Country.strip(), int(Population.strip()), float(Yearly_Change.replace(",", ".").strip()), int(Anual_changes.strip()), int(Migrants.strip()), float(Median_Age.replace(",", ".").strip()), float(Fertility_Rate.replace(",", ".").strip()), float(Density.strip()), (float(city_Popu.replace(",", ".").strip()) if city_Popu != "" else city_Popu), (int(Urban_Populations.strip()) if Urban_Populations != "" else Urban_Populations ), float(Countrys_Share_of_World_Pop.replace(",", ".").strip()) , int(Global_community.strip()), int(Rank.strip()), parsea_boolean(War.strip()), Partner.strip()))
+    return result
+
+'''def lee_fichero(fichero):
         #La función recibe como parámetro un fichero
     with open(fichero, encoding="utf-8") as f:
         #Abrimos el fichero con "utf-8", pues es el formato más recomendable para el tipo de archivos con los que trabajamos
@@ -57,7 +66,7 @@ def lee_fichero(fichero):
         #Creamos una lista a la cual añadimos tuplas(cada país) mediante un for, a la vez que asignamos a cada elemento de la tupla su correspondiente tipo de dato
             tupla=Pais(Month, Year, Date, Country, Population, Yearly_Change, Anual_changes, Migrants, Median_Age, Fertility_Rate, Density, city_Popu, Urban_Populations , Countrys_Share_of_World_Pop , Global_community, Rank, War, Partner)
             registros.append(tupla)
-    return registros
+    return registros'''
 
     #La función nos devuelve una lista de tuplas equivalente a toda la información del fichero dado
 
